@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>جامعة بكين للدراسات الدولية · التقويم الدراسي</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Amiri:wght@400;700&family=Reem+Kufi:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
+
+  :root {
+    --ink-black: #1a1a1a;
+    --ink-dark: #2c2318;
+    --ink-medium: #5c4a3a;
+    --ink-light: #8a7560;
+    --parchment: #f5efe0;
+    --parchment-deep: #e8dcc8;
+    --parchment-light: #faf6ed;
+    --vermillion: #c23a2b;
+    --vermillion-soft: #d4574a;
+    --gold: #b8943e;
+    --gold-light: #d4b86a;
+    --jade: #4a7c6f;
+    --jade-light: #6a9e8e;
+    --shadow-ink: rgba(44,35,24,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+    background: var(--parchment);
+    color: var(--ink-dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+    direction: rtl;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: radial-gradient(circle at 50% 50%, var(--ink-medium) 1px, transparent 1px);
+    background-size: 20px 20px;
+    z-index: 0;
+  }
+
+  .header {
+    position: relative;
+    text-align: center;
+    padding: 60px 20px 50px;
+    background: linear-gradient(180deg, var(--parchment-deep) 0%, var(--parchment) 100%);
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--vermillion), var(--gold), var(--vermillion), transparent);
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--ink-light), transparent);
+  }
+
+  .cloud-left, .cloud-right {
+    position: absolute;
+    top: 20px;
+    width: 120px;
+    height: 60px;
+    opacity: 0.08;
+    background: radial-gradient(ellipse, var(--ink-medium) 0%, transparent 70%);
+    filter: blur(8px);
+  }
+  .cloud-left { left: 5%; }
+  .cloud-right { right: 5%; }
+
+  .header-seal {
+    width: 60px; height: 60px;
+    border: 2.5px solid var(--vermillion);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    transform: rotate(-3deg);
+    position: relative;
+  }
+
+  .header-seal span {
+    font-family: 'Ma Shan Zheng', cursive;
+    color: var(--vermillion);
+    font-size: 22px;
+    line-height: 1.1;
+    letter-spacing: 2px;
+  }
+
+  .school-name-cn {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: clamp(22px, 4vw, 36px);
+    color: var(--ink-medium);
+    letter-spacing: 6px;
+    margin-bottom: 10px;
+    direction: ltr;
+  }
+
+  .school-name-ar {
+    font-family: 'Reem Kufi', 'Noto Naskh Arabic', serif;
+    font-size: clamp(24px, 4.5vw, 42px);
+    color: var(--ink-black);
+    margin-bottom: 8px;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.08);
+  }
+
+  .semester-title {
+    font-family: 'Reem Kufi', serif;
+    font-size: clamp(15px, 2.2vw, 20px);
+    color: var(--ink-medium);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .subtitle-line {
+    font-size: 13px;
+    color: var(--ink-light);
+    letter-spacing: 1px;
+  }
+
+  .main-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 20px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    padding: 20px;
+    margin-bottom: 10px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--ink-medium);
+  }
+
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 2px;
+  }
+
+  .month-card {
+    background: var(--parchment-light);
+    border-radius: 6px;
+    margin-bottom: 28px;
+    box-shadow: 0 2px 12px var(--shadow-ink), 0 0 0 1px rgba(0,0,0,0.03);
+    overflow: hidden;
+    animation: fadeUp 0.5s ease both;
+    position: relative;
+  }
+
+  .month-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--vermillion), var(--gold));
+    opacity: 0.6;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .month-header {
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, rgba(194,58,43,0.06) 0%, transparent 60%);
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .month-name-ar {
+    font-family: 'Reem Kufi', serif;
+    font-size: 28px;
+    color: var(--ink-dark);
+    line-height: 1;
+    font-weight: 700;
+  }
+
+  .month-name-cn {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 22px;
+    color: var(--ink-light);
+    direction: ltr;
+  }
+
+  .month-name-detail {
+    font-size: 13px;
+    color: var(--ink-light);
+    letter-spacing: 1px;
+  }
+
+  .month-weeks-badge {
+    margin-right: auto;
+    margin-left: 0;
+    padding: 3px 12px;
+    font-size: 11px;
+    color: var(--jade);
+    border: 1px solid var(--jade-light);
+    border-radius: 20px;
+    opacity: 0.8;
+  }
+
+  .table-scroll-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .cal-table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    direction: rtl;
+  }
+
+  .cal-table thead th {
+    padding: 10px 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-medium);
+    text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    background: rgba(0,0,0,0.015);
+    font-family: 'Noto Naskh Arabic', serif;
+  }
+
+  .cal-table thead th:first-child {
+    width: 70px;
+    color: var(--gold);
+  }
+
+  .cal-table thead th:nth-child(7),
+  .cal-table thead th:nth-child(8) {
+    color: var(--ink-light);
+    opacity: 0.7;
+  }
+
+  .cal-table tbody td {
+    padding: 10px 4px;
+    text-align: center;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(0,0,0,0.025);
+    vertical-align: top;
+    min-height: 44px;
+    position: relative;
+    transition: background 0.2s;
+  }
+
+  .cal-table tbody tr:hover td {
+    background: rgba(194,58,43,0.02);
+  }
+
+  .cal-table tbody td:first-child {
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .cal-table tbody td:nth-child(7),
+  .cal-table tbody td:nth-child(8) {
+    color: var(--ink-light);
+    opacity: 0.8;
+  }
+
+  .day-num {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink-dark);
+    margin-bottom: 2px;
+    font-family: 'Amiri', serif;
+  }
+
+  .day-event {
+    display: inline-block;
+    font-size: 9.5px;
+    padding: 1px 6px;
+    border-radius: 3px;
+    margin-top: 2px;
+    line-height: 1.6;
+    white-space: nowrap;
+    font-family: 'Noto Naskh Arabic', serif;
+  }
+
+  .event-holiday { background: linear-gradient(135deg, var(--vermillion), #d45a4a); color: #fff; }
+  .event-exam { background: linear-gradient(135deg, var(--gold), var(--gold-light)); color: #fff; }
+  .event-register { background: var(--jade); color: #fff; }
+  .event-activity { background: var(--ink-medium); color: #fff; }
+  .event-notice { background: rgba(0,0,0,0.06); color: var(--ink-medium); }
+
+  .holiday-banners {
+    padding: 0 20px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .holiday-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.6;
+    flex-wrap: wrap;
+  }
+
+  .holiday-banner.type-holiday {
+    background: linear-gradient(135deg, rgba(194,58,43,0.08), rgba(194,58,43,0.03));
+    border-right: 3px solid var(--vermillion);
+  }
+
+  .holiday-banner.type-exam {
+    background: linear-gradient(135deg, rgba(184,148,62,0.1), rgba(184,148,62,0.03));
+    border-right: 3px solid var(--gold);
+  }
+
+  .holiday-banner.type-summer {
+    background: linear-gradient(135deg, rgba(74,124,111,0.1), rgba(74,124,111,0.03));
+    border-right: 3px solid var(--jade);
+  }
+
+  .holiday-banner.type-notice {
+    background: linear-gradient(135deg, rgba(0,0,0,0.04), rgba(0,0,0,0.01));
+    border-right: 3px solid var(--ink-light);
+  }
+
+  .banner-icon {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .banner-name {
+    font-family: 'Reem Kufi', serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink-dark);
+  }
+
+  .banner-dates {
+    color: var(--ink-medium);
+    font-size: 12.5px;
+  }
+
+  .banner-duration {
+    margin-right: auto;
+    margin-left: 0;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .type-holiday .banner-duration { background: rgba(194,58,43,0.12); color: var(--vermillion); }
+  .type-exam .banner-duration { background: rgba(184,148,62,0.15); color: var(--gold); }
+  .type-notice .banner-duration { background: rgba(0,0,0,0.06); color: var(--ink-medium); }
+  .type-summer .banner-duration { background: rgba(74,124,111,0.15); color: var(--jade); }
+
+  .notes-section {
+    background: var(--parchment-light);
+    border-radius: 6px;
+    padding: 24px 28px;
+    box-shadow: 0 2px 12px var(--shadow-ink);
+    position: relative;
+    margin-top: 10px;
+  }
+
+  .notes-section::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 4px; height: 100%;
+    background: var(--jade);
+    border-radius: 0 6px 6px 0;
+    opacity: 0.6;
+  }
+
+  .notes-title {
+    font-family: 'Reem Kufi', serif;
+    font-size: 22px;
+    color: var(--ink-dark);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+  }
+
+  .notes-title::before {
+    content: '※';
+    color: var(--vermillion);
+    font-size: 14px;
+  }
+
+  .notes-content {
+    font-size: 15px;
+    line-height: 2.2;
+    color: var(--ink-medium);
+  }
+
+  .notes-content p {
+    margin-bottom: 6px;
+    padding-right: 12px;
+    border-right: 2px solid transparent;
+    transition: border-color 0.3s;
+  }
+
+  .notes-content p:hover {
+    border-right-color: var(--gold-light);
+  }
+
+  .footer {
+    text-align: center;
+    padding: 30px;
+    font-size: 12px;
+    color: var(--ink-light);
+    letter-spacing: 2px;
+  }
+
+  .footer::before {
+    content: '— ◆ —';
+    display: block;
+    margin-bottom: 12px;
+    color: var(--gold-light);
+    font-size: 10px;
+    letter-spacing: 8px;
+  }
+
+  .footer-cn {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 14px;
+    color: var(--ink-light);
+    direction: ltr;
+    margin-top: 4px;
+  }
+
+  .brush-corner {
+    position: absolute;
+    width: 40px; height: 40px;
+    opacity: 0.08;
+  }
+  .brush-corner.tr { top: 8px; right: 12px; border-top: 2px solid var(--ink-dark); border-right: 2px solid var(--ink-dark); }
+  .brush-corner.bl { bottom: 8px; left: 12px; border-bottom: 2px solid var(--ink-dark); border-left: 2px solid var(--ink-dark); }
+
+  @media (max-width: 768px) {
+    .header { padding: 40px 16px 30px; }
+    .month-header { padding: 12px 16px; }
+    .cal-table thead th, .cal-table tbody td { padding: 8px 3px; font-size: 12px; }
+    .day-num { font-size: 13px; }
+    .day-event { font-size: 8.5px; padding: 1px 4px; }
+    .notes-section { padding: 16px; }
+    .month-name-ar { font-size: 22px; }
+    .month-name-cn { font-size: 18px; }
+  }
+
+  @media (max-width: 480px) {
+    .cal-table thead th { font-size: 11px; }
+    .cal-table tbody td:first-child { font-size: 10px; }
+    .month-weeks-badge { display: none; }
+    .month-name-cn { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="cloud-left"></div>
+  <div class="cloud-right"></div>
+  <div class="header-seal"><span>二外</span></div>
+  <div class="school-name-cn">北京第二外国语学院</div>
+  <h1 class="school-name-ar">جامعة بكين للغات الأجنبية الثانية</h1>
+  <h2 class="semester-title">الكلية الدولية · التقويم الدراسي · حرم تشاويانغ 朝阳</h2>
+  <p class="subtitle-line">العام الدراسي ٢٠٢٥ – ٢٠٢٦ · الفصل الثاني</p>
+</div>
+
+<div class="main-content">
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--vermillion)"></div>عطلة رسمية</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div>امتحانات</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--jade)"></div>تسجيل</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--ink-medium)"></div>نشاط</div>
+    <div class="legend-item"><div class="legend-dot" style="background:rgba(0,0,0,0.12)"></div>إشعار</div>
+  </div>
+
+  <div id="calendar-container"></div>
+
+  <div class="notes-section">
+    <div class="brush-corner tr"></div>
+    <div class="brush-corner bl"></div>
+    <h3 class="notes-title">ملاحظات</h3>
+    <div class="notes-content" id="notes-content"></div>
+  </div>
+</div>
+
+<div class="footer">
+  الكلية الدولية — جامعة بكين للغات الأجنبية الثانية
+  <div class="footer-cn">北京第二外国语学院国际学院</div>
+</div>
+
+<script>
+const calendarData = {
+  chaoyang: {
+    notes: [
+      "١. يصل الطلاب إلى الجامعة في ١ مارس ٢٠٢٦، ويبدأ الفصل الدراسي في ٢ مارس، وتبدأ العطلة الصيفية في ١٣ يوليو.",
+      "٢. يبدأ المعلمون العمل في ٢٦ فبراير ٢٠٢٦، ويدخلون وضع العمل الصيفي في ١٥ يوليو.",
+      "٣. في حال وجود ظروف خاصة، ستقوم الجامعة بالتعديل وفقاً للأنظمة المعمول بها وإخطار الجميع."
+    ],
+    months: [
+      {
+        nameAr: "مارس", nameCn: "三月", detail: "مارس ٢٠٢٦", weeks: "الأسبوع ١ – ٥",
+        rows: [
+          { week: "—", days: [{},{},{},{},{},{},{d:1,ev:"وصول الطلاب",type:"register"}] },
+          { week: "الأول", days: [{d:2,ev:"تسجيل الجدد",type:"register"},{d:3,ev:"تسجيل القدامى",type:"register"},{d:4,ev:"اختبار شفوي",type:"activity"},{d:5},{d:6,ev:"إعلان الفصول",type:"notice"},{d:7},{d:8,ev:"يوم المرأة (مناسبة)",type:"notice"}] },
+          { week: "الثاني", days: [{d:9,ev:"توجيه الطلاب",type:"activity"},{d:10},{d:11},{d:12},{d:13},{d:14},{d:15}] },
+          { week: "الثالث", days: [{d:16},{d:17},{d:18},{d:19},{d:20},{d:21},{d:22}] },
+          { week: "الرابع", days: [{d:23},{d:24},{d:25},{d:26},{d:27},{d:28},{d:29}] },
+          { week: "الخامس", days: [{d:30},{d:31},{},{},{},{},{}] }
+        ]
+      },
+      {
+        nameAr: "أبريل", nameCn: "四月", detail: "أبريل ٢٠٢٦", weeks: "الأسبوع ٥ – ٩",
+        rows: [
+          { week: "الخامس", days: [{},{},{d:1},{d:2},{d:3},{d:4},{d:5,ev:"عيد تشينغمينغ",type:"holiday"}] },
+          { week: "السادس", days: [{d:6,ev:"إجازة تعويضية",type:"holiday"},{d:7},{d:8},{d:9},{d:10},{d:11},{d:12}] },
+          { week: "السابع", days: [{d:13},{d:14},{d:15},{d:16},{d:17},{d:18},{d:19}] },
+          { week: "الثامن", days: [{d:20},{d:21},{d:22},{d:23},{d:24},{d:25},{d:26}] },
+          { week: "التاسع", days: [{d:27,ev:"امتحان نصفي",type:"exam"},{d:28,ev:"امتحان نصفي",type:"exam"},{d:29,ev:"امتحان نصفي",type:"exam"},{d:30,ev:"امتحان نصفي",type:"exam"},{},{},{}] }
+        ]
+      },
+      {
+        nameAr: "مايو", nameCn: "五月", detail: "مايو ٢٠٢٦", weeks: "الأسبوع ٩ – ١٣",
+        rows: [
+          { week: "التاسع", days: [{},{},{},{},{d:1,ev:"عيد العمال",type:"holiday"},{d:2,ev:"إجازة",type:"holiday"},{d:3,ev:"إجازة",type:"holiday"}] },
+          { week: "العاشر", days: [{d:4,ev:"يوم الشباب",type:"holiday"},{d:5,ev:"إجازة",type:"holiday"},{d:6,ev:"رحلة دراسية",type:"activity"},{d:7,ev:"رحلة دراسية",type:"activity"},{d:8,ev:"رحلة دراسية",type:"activity"},{d:9,ev:"جدول ٥/٥",type:"notice"},{d:10}] },
+          { week: "الحادي عشر", days: [{d:11,ev:"امتحان الخريجين",type:"exam"},{d:12,ev:"امتحان الخريجين",type:"exam"},{d:13,ev:"امتحان الخريجين",type:"exam"},{d:14,ev:"امتحان الخريجين",type:"exam"},{d:15,ev:"امتحان الخريجين",type:"exam"},{d:16},{d:17}] },
+          { week: "الثاني عشر", days: [{d:18},{d:19},{d:20},{d:21},{d:22},{d:23},{d:24}] },
+          { week: "الثالث عشر", days: [{d:25},{d:26},{d:27},{d:28},{d:29},{d:30},{d:31}] }
+        ]
+      },
+      {
+        nameAr: "يونيو", nameCn: "六月", detail: "يونيو ٢٠٢٦", weeks: "الأسبوع ١٤ – ١٨",
+        rows: [
+          { week: "الرابع عشر", days: [{d:1},{d:2},{d:3},{d:4},{d:5},{d:6},{d:7}] },
+          { week: "الخامس عشر", days: [{d:8},{d:9},{d:10},{d:11},{d:12},{d:13},{d:14}] },
+          { week: "السادس عشر", days: [{d:15},{d:16},{d:17},{d:18},{d:19,ev:"عيد قوارب التنين",type:"holiday"},{d:20,ev:"إجازة",type:"holiday"},{d:21,ev:"إجازة",type:"holiday"}] },
+          { week: "السابع عشر", days: [{d:22},{d:23},{d:24},{d:25},{d:26},{d:27},{d:28}] },
+          { week: "الثامن عشر", days: [{d:29},{d:30},{},{},{},{},{}] }
+        ]
+      },
+      {
+        nameAr: "يوليو", nameCn: "七月", detail: "يوليو ٢٠٢٦", weeks: "الأسبوع ١٨ – ٢٢",
+        rows: [
+          { week: "الثامن عشر", days: [{},{},{d:1,ev:"امتحان نهائي",type:"exam"},{d:2,ev:"امتحان نهائي",type:"exam"},{d:3,ev:"امتحان نهائي",type:"exam"},{d:4},{d:5}] },
+          { week: "التاسع عشر", days: [{d:6,ev:"امتحان نهائي",type:"exam"},{d:7},{d:8},{d:9},{d:10,ev:"حفل التخرج",type:"activity"},{d:11},{d:12}] },
+          { week: "العشرون", days: [{d:13,ev:"بداية العطلة",type:"holiday"},{d:14},{d:15},{d:16},{d:17},{d:18},{d:19}] },
+          { week: "الحادي والعشرون", days: [{d:20},{d:21},{d:22},{d:23},{d:24},{d:25},{d:26}] },
+          { week: "الثاني والعشرون", days: [{d:27},{d:28},{d:29},{d:30},{d:31},{},{}] }
+        ]
+      },
+      {
+        nameAr: "أغسطس", nameCn: "八月", detail: "أغسطس ٢٠٢٦", weeks: "الأسبوع ٢٢ – ٢٧",
+        rows: [
+          { week: "الثاني والعشرون", days: [{},{},{},{},{},{d:1},{d:2}] },
+          { week: "الثالث والعشرون", days: [{d:3},{d:4},{d:5},{d:6},{d:7},{d:8},{d:9}] },
+          { week: "الرابع والعشرون", days: [{d:10},{d:11},{d:12},{d:13,ev:"العطلة الصيفية",type:"holiday"},{d:14},{d:15},{d:16}] },
+          { week: "الخامس والعشرون", days: [{d:17},{d:18},{d:19},{d:20},{d:21},{d:22},{d:23}] },
+          { week: "السادس والعشرون", days: [{d:24},{d:25},{d:26},{d:27},{d:28},{d:29},{d:30}] },
+          { week: "السابع والعشرون", days: [{d:31},{},{},{},{},{},{}] }
+        ]
+      },
+      {
+        nameAr: "سبتمبر", nameCn: "九月", detail: "سبتمبر ٢٠٢٦", weeks: "الأسبوع ٢٧",
+        rows: [
+          { week: "السابع والعشرون", days: [{},{d:1},{d:2},{d:3},{d:4,ev:"نهاية العطلة",type:"notice"},{d:5},{d:6}] }
+        ]
+      }
+    ]
+  }
+};
+
+const holidaySummaries = {
+  "مارس": [
+    { name: "يوم المرأة العالمي 妇女节", dates: "٨ مارس (الأحد)", duration: "مناسبة — بدون إجازة إضافية", icon: "🌸", type: "notice" }
+  ],
+  "أبريل": [
+    { name: "عيد تشينغمينغ 清明节", dates: "٤ – ٦ أبريل (سبت → اثنين)", duration: "٣ أيام إجازة", icon: "🍃", type: "holiday" },
+    { name: "امتحانات منتصف الفصل 期中考试", dates: "٢٧ – ٣٠ أبريل", duration: "٤ أيام", icon: "📝", type: "exam" }
+  ],
+  "مايو": [
+    { name: "عيد العمال + يوم الشباب 劳动节+青年节", dates: "١ – ٥ مايو (جمعة → ثلاثاء)", duration: "٥ أيام إجازة", icon: "🎌", type: "holiday" },
+    { name: "امتحانات الخريجين 毕业生期末考试", dates: "١١ – ١٥ مايو", duration: "٥ أيام", icon: "🎓", type: "exam" }
+  ],
+  "يونيو": [
+    { name: "عيد قوارب التنين 端午节", dates: "١٩ – ٢١ يونيو (جمعة → أحد)", duration: "٣ أيام إجازة", icon: "🐉", type: "holiday" }
+  ],
+  "يوليو": [
+    { name: "امتحانات نهاية الفصل 期末考试", dates: "١ – ٦ يوليو", duration: "٦ أيام", icon: "📝", type: "exam" },
+    { name: "العطلة الصيفية 暑假", dates: "١٣ يوليو → ٤ سبتمبر", duration: "٥٤ يوماً", icon: "☀️", type: "summer" }
+  ],
+  "أغسطس": [
+    { name: "العطلة الصيفية مستمرة 暑假", dates: "١٣ يوليو → ٤ سبتمبر", duration: "٥٤ يوماً", icon: "🏖️", type: "summer" }
+  ],
+  "سبتمبر": [
+    { name: "نهاية العطلة الصيفية", dates: "٤ سبتمبر", duration: "العودة للدراسة", icon: "📚", type: "summer" }
+  ]
+};
+
+function getEventClass(type) {
+  return { holiday:'event-holiday', exam:'event-exam', register:'event-register', activity:'event-activity', notice:'event-notice' }[type] || 'event-notice';
+}
+
+function toArabicNum(n) {
+  return new Intl.NumberFormat('ar-EG').format(n);
+}
+
+function renderCalendar() {
+  const data = calendarData['chaoyang'];
+  const container = document.getElementById('calendar-container');
+  let html = '';
+
+  data.months.forEach((month, mi) => {
+    const holidays = holidaySummaries[month.nameAr] || [];
+    let bannersHtml = '';
+    if (holidays.length > 0) {
+      bannersHtml = '<div class="holiday-banners">';
+      holidays.forEach(h => {
+        bannersHtml += `
+          <div class="holiday-banner type-${h.type}">
+            <span class="banner-icon">${h.icon}</span>
+            <span class="banner-name">${h.name}</span>
+            <span class="banner-dates">${h.dates}</span>
+            <span class="banner-duration">${h.duration}</span>
+          </div>`;
+      });
+      bannersHtml += '</div>';
+    }
+
+    html += `<div class="month-card" style="animation-delay:${mi*0.06}s">
+      <div class="month-header">
+        <span class="month-name-ar">${month.nameAr}</span>
+        <span class="month-name-cn">${month.nameCn}</span>
+        <span class="month-name-detail">${month.detail}</span>
+        <span class="month-weeks-badge">${month.weeks}</span>
+      </div>
+      ${bannersHtml}
+      <div class="table-scroll-wrapper">
+      <table class="cal-table">
+        <thead><tr>
+          <th scope="col">الأسبوع</th>
+          <th scope="col">الاثنين</th>
+          <th scope="col">الثلاثاء</th>
+          <th scope="col">الأربعاء</th>
+          <th scope="col">الخميس</th>
+          <th scope="col">الجمعة</th>
+          <th scope="col">السبت</th>
+          <th scope="col">الأحد</th>
+        </tr></thead><tbody>`;
+
+    month.rows.forEach(row => {
+      html += `<tr><td>${row.week}</td>`;
+      row.days.forEach(day => {
+        if (!day?.d) {
+          html += '<td></td>';
+        } else {
+          const ev = day.ev ? `<span class="day-event ${getEventClass(day.type)}">${day.ev}</span>` : '';
+          html += `<td><span class="day-num">${toArabicNum(day.d)}</span>${ev}</td>`;
+        }
+      });
+      html += '</tr>';
+    });
+    html += '</tbody></table></div></div>';
+  });
+
+  container.innerHTML = html;
+  document.getElementById('notes-content').innerHTML = data.notes.map(n => `<p>${n}</p>`).join('');
+}
+
+renderCalendar();
+</script>
+</body>
+</html>

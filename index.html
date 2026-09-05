@@ -180,7 +180,7 @@ body.islamic .isl{display:inline-block}
 .ics-close{position:absolute;top:14px;left:18px;background:none;border:none;font-size:22px;color:var(--ink4);cursor:pointer;line-height:1;padding:4px 8px;border-radius:6px;transition:all .2s}
 .ics-close:hover{background:rgba(0,0,0,.05);color:var(--ink)}
 @keyframes glow{0%,100%{box-shadow:0 4px 20px var(--sh)}50%{box-shadow:0 4px 28px rgba(194,58,43,.25)}}
-.ics-card.open{animation:glow 2s ease 2}
+.ics.open .ics-card{animation:glow 2s ease 2}
 .ics-card::before{content:'';position:absolute;top:0;right:0;width:5px;height:100%;background:linear-gradient(var(--jade),var(--gold))}
 .ics-h{font-family:'Reem Kufi',serif;font-size:22px;color:var(--ink);font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .ics-sub{font-size:14px;color:var(--ink3);line-height:1.9;margin-bottom:20px}
@@ -328,7 +328,7 @@ body.islamic .isl{display:inline-block}
 <div class="footer">جامعة بكين للغات الأجنبية الثانية<div class="footer-cn">北京第二外国语学院</div></div>
 
 <script>
-const TODAY=new Date(2026,8,5);
+const _n=new Date();const TODAY=new Date(_n.getFullYear(),_n.getMonth(),_n.getDate());
 const D={
 1:{
  start:new Date(2026,8,7),end:new Date(2027,0,17),vac:new Date(2027,0,18),
@@ -462,7 +462,9 @@ function obs(){
  document.querySelectorAll('.tl-item').forEach((el,i)=>setTimeout(()=>el.classList.add('show'),i*80));
 }
 
-render(1);status();fabCheck();
+const _def=(TODAY>=new Date(2027,1,28))?2:1;
+if(_def===2){document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('on',i===1));document.getElementById('slider').classList.add('s2');document.getElementById('s1').classList.remove('on');document.getElementById('s2').classList.add('on');cur=2}
+render(_def);status();fabCheck();
 if(localStorage.getItem('isl')==='1'){document.body.classList.add('islamic');const b=document.getElementById('islBtn');b.classList.add('on');b.textContent='☾ إخفاء المناسبات الإسلامية والسعودية'}
 if(localStorage.getItem('cal')==='1'){document.body.classList.add('hijri');document.querySelectorAll('.ct-btn').forEach((b,i)=>b.classList.toggle('on',i===1))}
 </script>

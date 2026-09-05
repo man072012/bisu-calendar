@@ -42,6 +42,15 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.04;b
 .scroll-hint::after{content:'';display:block;width:1px;height:40px;background:linear-gradient(var(--ink4),transparent);margin:8px auto 0;animation:pulse 2s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
 
+/* ═══ HERO CTA ═══ */
+.hero-cta{margin-top:28px;opacity:0;animation:fadeup .8s ease 2.4s forwards}
+.cta-btn{display:inline-flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--red),#d8503f);color:#fff;padding:16px 34px;border-radius:34px;text-decoration:none;font-family:'Reem Kufi',serif;font-size:17px;font-weight:700;border:none;cursor:pointer;box-shadow:0 6px 24px rgba(194,58,43,.35);transition:all .3s;position:relative;overflow:hidden}
+.cta-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);transform:translateX(-100%);animation:shine 3.5s ease-in-out infinite}
+@keyframes shine{0%,70%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+.cta-btn:hover{transform:translateY(-3px);box-shadow:0 10px 32px rgba(194,58,43,.45)}
+.cta-btn i{font-style:normal;font-size:21px}
+.cta-sub{font-size:12px;color:var(--ink4);margin-top:10px}
+
 /* ═══ STATUS CARD ═══ */
 .status{position:relative;z-index:2;max-width:900px;margin:-60px auto 0;padding:0 20px}
 .status-card{background:var(--paper3);border-radius:12px;padding:28px 32px;box-shadow:0 8px 32px var(--sh),0 0 0 1px rgba(0,0,0,.04);display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:24px;opacity:0;transform:translateY(30px);transition:all .8s ease}
@@ -163,9 +172,15 @@ body.islamic .isl{display:inline-block}
 
 
 /* ═══ ICS SECTION ═══ */
-.ics{max-width:1100px;margin:20px auto 0;padding:0 20px;position:relative;z-index:1}
+.ics{max-width:1100px;margin:20px auto 0;scroll-margin-top:90px;padding:0 20px;position:relative;z-index:1}
 .ics-card{background:linear-gradient(135deg,var(--paper3),rgba(74,124,111,.04));border-radius:12px;padding:28px 30px;box-shadow:0 4px 20px var(--sh);position:relative;overflow:hidden;opacity:0;transform:translateY(30px);transition:all .7s ease}
 .ics-card.show{opacity:1;transform:none}
+.ics-card{max-height:0;padding-top:0;padding-bottom:0;overflow:hidden;transition:max-height .6s cubic-bezier(.4,0,.2,1),padding .4s ease,opacity .5s ease,transform .5s ease}
+.ics-card.open{max-height:2600px;padding-top:28px;padding-bottom:28px}
+.ics-close{position:absolute;top:14px;left:18px;background:none;border:none;font-size:22px;color:var(--ink4);cursor:pointer;line-height:1;padding:4px 8px;border-radius:6px;transition:all .2s}
+.ics-close:hover{background:rgba(0,0,0,.05);color:var(--ink)}
+@keyframes glow{0%,100%{box-shadow:0 4px 20px var(--sh)}50%{box-shadow:0 4px 28px rgba(194,58,43,.25)}}
+.ics-card.open{animation:glow 2s ease 2}
 .ics-card::before{content:'';position:absolute;top:0;right:0;width:5px;height:100%;background:linear-gradient(var(--jade),var(--gold))}
 .ics-h{font-family:'Reem Kufi',serif;font-size:22px;color:var(--ink);font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .ics-sub{font-size:14px;color:var(--ink3);line-height:1.9;margin-bottom:20px}
@@ -223,6 +238,10 @@ body.islamic .isl{display:inline-block}
   <h1 class="h-ar">جامعة بكين للغات الأجنبية الثانية</h1>
   <p class="h-sub">التقويم الدراسي · 校历</p>
   <div class="h-year">2026 – 2027</div>
+  <div class="hero-cta">
+    <button class="cta-btn" onclick="openIcs()"><i>📅</i> أضف التقويم إلى جوالك</button>
+    <div class="cta-sub">ملف ICS · يعمل على آيفون وأندرويد والكمبيوتر</div>
+  </div>
   <div class="scroll-hint">مرّر للأسفل</div>
 </section>
 
@@ -241,7 +260,8 @@ body.islamic .isl{display:inline-block}
 <div id="s2" class="sem"></div>
 
 
-<div class="ics"><div class="ics-card">
+<div class="ics" id="icsSec"><div class="ics-card" id="icsCard">
+  <button class="ics-close" onclick="closeIcs()" aria-label="إغلاق">✕</button>
   <div class="ics-h">📅 أضف التقويم إلى جوالك</div>
   <div class="ics-sub">حمّل ملف <b>ICS</b> ليظهر التقويم الدراسي كاملاً في تطبيق التقويم لديك، مع تنبيه تلقائي قبل كل حدث بيوم واحد. يشمل الملف <b>31 حدثاً</b>: الفصلين الدراسيين، العطل الصينية، الامتحانات، أسابيع الممارسة، والمناسبات الإسلامية والسعودية.</div>
   <a class="dl" href="bisu-calendar.ics" download>⬇ تحميل ملف التقويم (ICS)</a>
@@ -328,6 +348,8 @@ const D={
  ]
 }};
 
+function openIcs(){const card=document.getElementById('icsCard');card.classList.add('show','open');setTimeout(()=>document.getElementById('icsSec').scrollIntoView({behavior:'smooth',block:'start'}),80)}
+function closeIcs(){document.getElementById('icsCard').classList.remove('open')}
 function zoom(s){document.getElementById("lbi").src=s;document.getElementById("lb").classList.add("on")}
 document.addEventListener("keydown",e=>{if(e.key==="Escape")document.getElementById("lb").classList.remove("on")});
 let cur=1;

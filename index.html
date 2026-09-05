@@ -172,11 +172,11 @@ body.islamic .isl{display:inline-block}
 
 
 /* ═══ ICS SECTION ═══ */
-.ics{max-width:1100px;margin:20px auto 0;scroll-margin-top:90px;padding:0 20px;position:relative;z-index:1}
+.ics{display:none;max-width:1100px;margin:20px auto 0;scroll-margin-top:90px;padding:0 20px;position:relative;z-index:1}
 .ics-card{background:linear-gradient(135deg,var(--paper3),rgba(74,124,111,.04));border-radius:12px;padding:28px 30px;box-shadow:0 4px 20px var(--sh);position:relative;overflow:hidden;opacity:0;transform:translateY(30px);transition:all .7s ease}
-.ics-card.show{opacity:1;transform:none}
-.ics-card{max-height:0;padding-top:0;padding-bottom:0;overflow:hidden;transition:max-height .6s cubic-bezier(.4,0,.2,1),padding .4s ease,opacity .5s ease,transform .5s ease}
-.ics-card.open{max-height:2600px;padding-top:28px;padding-bottom:28px}
+.ics.open{display:block;animation:icsIn .5s cubic-bezier(.4,0,.2,1)}
+@keyframes icsIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.ics.open .ics-card{opacity:1;transform:none}
 .ics-close{position:absolute;top:14px;left:18px;background:none;border:none;font-size:22px;color:var(--ink4);cursor:pointer;line-height:1;padding:4px 8px;border-radius:6px;transition:all .2s}
 .ics-close:hover{background:rgba(0,0,0,.05);color:var(--ink)}
 @keyframes glow{0%,100%{box-shadow:0 4px 20px var(--sh)}50%{box-shadow:0 4px 28px rgba(194,58,43,.25)}}
@@ -206,6 +206,15 @@ body.islamic .isl{display:inline-block}
 .lb img{max-width:100%;max-height:92vh;border-radius:14px;box-shadow:0 10px 50px rgba(0,0,0,.5)}
 .ics-warn{margin-top:18px;padding:12px 16px;background:rgba(194,58,43,.05);border-right:3px solid var(--red);border-radius:8px;font-size:12.5px;color:var(--ink3);line-height:1.9}
 @media(max-width:768px){.ics-card{padding:20px 18px}.plat{grid-template-columns:1fr}}
+
+/* ═══ FAB ═══ */
+.fab{position:fixed;bottom:22px;left:22px;z-index:80;display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--red),#d8503f);color:#fff;border:none;padding:14px 22px;border-radius:32px;font-family:'Reem Kufi',serif;font-size:14px;font-weight:700;cursor:pointer;box-shadow:0 6px 22px rgba(194,58,43,.4);opacity:0;visibility:hidden;transform:translateY(70px) scale(.9);transition:all .4s cubic-bezier(.34,1.4,.64,1)}
+.fab.on{opacity:1;visibility:visible;transform:none}
+.fab:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(194,58,43,.5)}
+.fab i{font-style:normal;font-size:18px}
+.fab::before{content:'';position:absolute;inset:-4px;border-radius:36px;border:2px solid var(--red);opacity:0;animation:fabRing 2.5s ease-out 3}
+@keyframes fabRing{0%{opacity:.6;transform:scale(.95)}100%{opacity:0;transform:scale(1.15)}}
+@media(max-width:480px){.fab{padding:12px 18px;font-size:13px;bottom:16px;left:16px}}
 
 /* ═══ NOTES ═══ */
 .notes{background:var(--paper3);border-radius:10px;padding:26px 30px;box-shadow:0 2px 16px var(--sh);position:relative;opacity:0;transform:translateY(30px);transition:all .7s ease}
@@ -312,6 +321,8 @@ body.islamic .isl{display:inline-block}
   <div class="ics-warn">⚠️ <b>ملاحظات مهمة:</b> جميع الأحداث مضبوطة كـ«أحداث يوم كامل» بتوقيت بكين (Asia/Shanghai). المناسبات الإسلامية محسوبة وفق تقويم <b>أم القرى</b> وقد تختلف بيوم حسب الرؤية الشرعية. المناسبات الإسلامية والسعودية <b>ليست إجازات جامعية في الصين</b> — الدراسة مستمرة فيها.</div>
 </div></div>
 
+<button class="fab" id="fab" onclick="openIcs()"><i>📅</i> أضف التقويم لجوالك</button>
+
 <div class="lb" id="lb" onclick="this.classList.remove('on')"><img id="lbi" alt=""></div>
 
 <div class="footer">جامعة بكين للغات الأجنبية الثانية<div class="footer-cn">北京第二外国语学院</div></div>
@@ -349,8 +360,10 @@ const D={
  ]
 }};
 
-function openIcs(){const card=document.getElementById('icsCard');card.classList.add('show','open');setTimeout(()=>document.getElementById('icsSec').scrollIntoView({behavior:'smooth',block:'start'}),80)}
-function closeIcs(){document.getElementById('icsCard').classList.remove('open')}
+function openIcs(){const s=document.getElementById('icsSec');s.classList.add('open');document.getElementById('icsCard').classList.add('show');document.getElementById('fab').classList.remove('on');setTimeout(()=>s.scrollIntoView({behavior:'smooth',block:'start'}),60)}
+function closeIcs(){document.getElementById('icsSec').classList.remove('open');fabCheck()}
+function fabCheck(){const s=document.getElementById('icsSec'),f=document.getElementById('fab');if(!s||!f)return;const past=window.scrollY>window.innerHeight*.75;f.classList.toggle('on',past&&!s.classList.contains('open'))}
+window.addEventListener('scroll',fabCheck,{passive:true});
 function zoom(s){document.getElementById("lbi").src=s;document.getElementById("lb").classList.add("on")}
 document.addEventListener("keydown",e=>{if(e.key==="Escape")document.getElementById("lb").classList.remove("on")});
 let cur=1;
@@ -449,7 +462,7 @@ function obs(){
  document.querySelectorAll('.tl-item').forEach((el,i)=>setTimeout(()=>el.classList.add('show'),i*80));
 }
 
-render(1);status();
+render(1);status();fabCheck();
 if(localStorage.getItem('isl')==='1'){document.body.classList.add('islamic');const b=document.getElementById('islBtn');b.classList.add('on');b.textContent='☾ إخفاء المناسبات الإسلامية والسعودية'}
 if(localStorage.getItem('cal')==='1'){document.body.classList.add('hijri');document.querySelectorAll('.ct-btn').forEach((b,i)=>b.classList.toggle('on',i===1))}
 </script>

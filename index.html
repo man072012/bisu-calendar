@@ -99,16 +99,18 @@ body.hijri .mh-hj{display:inline}
 .tl{position:relative;padding:30px 0;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .tl-line{position:absolute;top:50%;right:0;left:0;height:2px;background:linear-gradient(90deg,transparent,var(--paper2) 5%,var(--paper2) 95%,transparent)}
 .tl-items{display:flex;gap:0;min-width:max-content;padding:0 20px}
-.tl-item{width:120px;position:relative;text-align:center;flex-shrink:0;opacity:0;transform:scale(.8);transition:all .5s cubic-bezier(.34,1.56,.64,1)}
+.tl-item{width:150px;cursor:pointer;position:relative;text-align:center;flex-shrink:0;opacity:0;transform:scale(.8);transition:all .5s cubic-bezier(.34,1.56,.64,1)}
 .tl-item.show{opacity:1;transform:scale(1)}
 .tl-dot{width:14px;height:14px;border-radius:50%;margin:0 auto;border:3px solid var(--paper3);box-shadow:0 0 0 2px currentColor;position:relative;z-index:2;transition:transform .3s}
 .tl-item:hover .tl-dot{transform:scale(1.4)}
+.tl-item:hover .tl-lbl{color:var(--red)}
+.tl-item:active{transform:scale(.95)!important}
 .tl-item.h .tl-dot{color:var(--red);background:var(--red)}
 .tl-item.e .tl-dot{color:var(--gold);background:var(--gold)}
 .tl-item.a .tl-dot{color:var(--ink3);background:var(--ink3)}
 .tl-item.r .tl-dot{color:var(--jade);background:var(--jade)}
 .tl-item.v .tl-dot{color:var(--jade2);background:var(--jade2)}
-.tl-lbl{font-size:11px;color:var(--ink3);margin-top:10px;line-height:1.4;font-weight:600}
+.tl-lbl{font-size:11.5px;color:var(--ink3);margin-top:10px;line-height:1.4;font-weight:600;white-space:normal;padding:0 4px}
 .tl-date{font-size:10px;color:var(--ink4);margin-top:2px}
 .tl-item:nth-child(even){transform:translateY(-70px) scale(.8)}
 .tl-item:nth-child(even).show{transform:translateY(-70px) scale(1)}
@@ -116,6 +118,11 @@ body.hijri .mh-hj{display:inline}
 .tl-item:nth-child(even){display:flex;flex-direction:column}
 .tl-item:nth-child(even) .tl-date{order:-2;margin-bottom:2px}
 
+@keyframes flashCard{0%,100%{box-shadow:0 2px 16px var(--sh)}30%,60%{box-shadow:0 0 0 4px rgba(194,58,43,.35),0 8px 30px rgba(194,58,43,.25)}}
+.mc.flash{animation:flashCard 1.6s ease}
+@keyframes flashCell{0%,100%{background:transparent}30%,70%{background:rgba(194,58,43,.18)}}
+td.flash{animation:flashCell 1.8s ease}
+.tl-hint{font-size:11px;color:var(--ink4);margin:-6px 0 4px;text-align:right}
 /* ═══ LEGEND ═══ */
 .legend{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;padding:24px 20px 10px;position:relative;z-index:1}
 .lg{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--ink3)}
@@ -360,8 +367,8 @@ const D={
 1:{
  start:new Date(2026,8,7),end:new Date(2027,0,17),vac:new Date(2027,0,18),
  notes:["1. الأسبوعان 17 و 18 مخصصان لأسبوع الممارسة اللغوية والممارسة المهنية.","2. امتحانات منتصف الفصل لا توقف الدراسة، وامتحانات نهاية الفصل أسبوع واحد. يمكن للكلية ترتيب امتحانات منتصف الفصل حسب تقدم التدريس.","3. يصل الطلاب إلى الجامعة في 6 سبتمبر 2026، ويبدأ الفصل الدراسي في 7 سبتمبر، وتبدأ العطلة الشتوية في 18 يناير 2027.","4. يبدأ المعلمون العمل في 3 سبتمبر 2026، ويدخلون وضع العمل الشتوي في 20 يناير 2027.","5. في حال وجود ظروف خاصة، ستقوم الجامعة بالتعديل وفقاً للأنظمة المعمول بها وإخطار الجميع."],
- tl:[["وصول الطلاب","6 سبت","r",2026,8,6],["بداية الدراسة","7 سبت","r",2026,8,7],["عيد منتصف الخريف","25–27 سبت","h",2026,8,25],["العيد الوطني","1–7 أكت","h",2026,9,1],["التدريب العسكري","10–23 أكت","a",2026,9,10],["امتحان نصفي","26–30 أكت","e",2026,9,26],["أسبوع الممارسة","28 ديس–10 ينا","a",2026,11,28],["رأس السنة","1–3 ينا","h",2027,0,1],["امتحان نهائي","11–15 ينا","e",2027,0,11],["العطلة الشتوية","18 ينا","v",2027,0,18],["عيد الربيع","6 فبر","h",2027,1,6],["نهاية العطلة","28 فبر","n",2027,1,28]],
- itl:[["اليوم الوطني السعودي","23 سبت","i",2026,8,23],["بداية رمضان","8 فبر","i",2027,1,8],["يوم التأسيس","22 فبر","i",2027,1,22]],
+ tl:[["وصول الطلاب","6 سبتمبر","r",2026,8,6],["بداية الدراسة","7 سبتمبر","r",2026,8,7],["عيد منتصف الخريف","25–27 سبتمبر","h",2026,8,25],["العيد الوطني","1–7 أكتوبر","h",2026,9,1],["التدريب العسكري","10–23 أكتوبر","a",2026,9,10],["امتحان نصفي","26–30 أكتوبر","e",2026,9,26],["أسبوع الممارسة","28 ديسمبر–10 يناير","a",2026,11,28],["رأس السنة","1–3 يناير","h",2027,0,1],["امتحان نهائي","11–15 يناير","e",2027,0,11],["العطلة الشتوية","18 يناير","v",2027,0,18],["عيد الربيع","6 فبراير","h",2027,1,6],["نهاية العطلة","28 فبراير","n",2027,1,28]],
+ itl:[["اليوم الوطني السعودي","23 سبتمبر","i",2026,8,23],["بداية رمضان","8 فبراير","i",2027,1,8],["يوم التأسيس","22 فبراير","i",2027,1,22]],
  months:[
   {ar:"سبتمبر",cn:"九月",y:2026,m:8,w:"الأسبوع 1 – 4",b:[["🌕","عيد منتصف الخريف 中秋节","25 – 27 سبتمبر (جمعة → أحد)","3 أيام إجازة","h"]],rows:[["—",[0,0,0,0,0,0,[6,"وصول الطلاب","r"]]],["الأول",[[7,"بداية الدراسة","r"],8,9,10,11,12,13]],["الثاني",[14,15,16,17,18,19,20]],["الثالث",[21,22,23,24,[25,"عيد منتصف الخريف","h"],[26,"إجازة","h"],[27,"إجازة","h"]]],["الرابع",[28,29,30,0,0,0,0]]]},
   {ar:"أكتوبر",cn:"十月",y:2026,m:9,w:"الأسبوع 4 – 8",b:[["🇨🇳","العيد الوطني 国庆节","1 – 7 أكتوبر (خميس → أربعاء)","7 أيام إجازة","h"],["🎖️","التدريب العسكري للسنة الأولى 大一军训","10 – 23 أكتوبر","14 يوماً","a"],["📝","امتحانات منتصف الفصل 期中考试","26 – 30 أكتوبر","بدون توقف الدراسة","e"]],rows:[["الرابع",[0,0,0,[1,"العيد الوطني","h"],[2,"إجازة","h"],[3,"إجازة","h"],[4,"إجازة","h"]]],["الخامس",[[5,"إجازة","h"],[6,"إجازة","h"],[7,"إجازة","h"],8,9,[10,"بداية التدريب العسكري","a"],11]],["السادس",[12,13,14,15,16,17,18]],["السابع",[19,20,21,22,[23,"نهاية التدريب العسكري","a"],24,25]],["الثامن",[[26,"امتحان نصفي","e"],[27,"امتحان نصفي","e"],[28,"امتحان نصفي","e"],[29,"امتحان نصفي","e"],[30,"امتحان نصفي","e"],31,0]]]},
@@ -374,8 +381,8 @@ const D={
 2:{
  start:new Date(2027,2,1),end:new Date(2027,6,11),vac:new Date(2027,6,12),
  notes:["1. الأسبوعان 17 و 18 مخصصان لأسبوع الممارسة اللغوية والممارسة المهنية.","2. امتحانات منتصف الفصل لا توقف الدراسة، وامتحانات نهاية الفصل أسبوع واحد. يمكن للكلية ترتيب امتحانات منتصف الفصل حسب تقدم التدريس.","3. يصل الطلاب إلى الجامعة في 28 فبراير 2027، ويبدأ الفصل الدراسي في 1 مارس، وتبدأ العطلة الصيفية في 12 يوليو.","4. يبدأ المعلمون العمل في 25 فبراير 2027، ويدخلون وضع العمل الصيفي في 14 يوليو.","5. في حال وجود ظروف خاصة، ستقوم الجامعة بالتعديل وفقاً للأنظمة المعمول بها وإخطار الجميع."],
- tl:[["وصول الطلاب","28 فبر","r",2027,1,28],["بداية الدراسة","1 مار","r",2027,2,1],["عيد تشينغمينغ","5 أبر","h",2027,3,5],["امتحان نصفي","19–23 أبر","e",2027,3,19],["امتحان الخريجين","26–30 أبر","e",2027,3,26],["عيد العمال + الشباب","1–5 ماي","h",2027,4,1],["实践研学","6–8 ماي","a",2027,4,6],["عيد قوارب التنين","9 يون","h",2027,5,9],["أسبوع الممارسة","21 يون–4 يول","a",2027,5,21],["امتحان نهائي","5–9 يول","e",2027,6,5],["العطلة الصيفية","12 يول","v",2027,6,12],["نهاية العطلة","5 سبت","n",2027,8,5]],
- itl:[["عيد الفطر","9 مار","i",2027,2,9],["يوم عرفة","15 ماي","i",2027,4,15],["عيد الأضحى","16 ماي","i",2027,4,16],["عاشوراء","15 يون","i",2027,5,15]],
+ tl:[["وصول الطلاب","28 فبراير","r",2027,1,28],["بداية الدراسة","1 مارس","r",2027,2,1],["عيد تشينغمينغ","5 أبريل","h",2027,3,5],["امتحان نصفي","19–23 أبريل","e",2027,3,19],["امتحان الخريجين","26–30 أبريل","e",2027,3,26],["عيد العمال + الشباب","1–5 مايو","h",2027,4,1],["实践研学","6–8 مايو","a",2027,4,6],["عيد قوارب التنين","9 يونيو","h",2027,5,9],["أسبوع الممارسة","21 يونيو–4 يوليو","a",2027,5,21],["امتحان نهائي","5–9 يوليو","e",2027,6,5],["العطلة الصيفية","12 يوليو","v",2027,6,12],["نهاية العطلة","5 سبتمبر","n",2027,8,5]],
+ itl:[["عيد الفطر","9 مارس","i",2027,2,9],["يوم عرفة","15 مايو","i",2027,4,15],["عيد الأضحى","16 مايو","i",2027,4,16],["عاشوراء","15 يونيو","i",2027,5,15]],
  months:[
   {ar:"مارس",cn:"三月",y:2027,m:2,w:"الأسبوع 1 – 5",b:[],rows:[["—",[0,0,0,0,0,0,[28,"وصول الطلاب","r"]]],["الأول",[[1,"بداية الدراسة","r"],2,3,4,5,6,7]],["الثاني",[8,9,10,11,12,13,14]],["الثالث",[15,16,17,18,19,20,21]],["الرابع",[22,23,24,25,26,27,28]],["الخامس",[29,30,31,0,0,0,0]]]},
   {ar:"أبريل",cn:"四月",y:2027,m:3,w:"الأسبوع 5 – 9",b:[["🍃","عيد تشينغمينغ 清明节","3 – 5 أبريل (سبت → اثنين)","3 أيام إجازة","h"],["📝","امتحانات منتصف الفصل 期中考试","19 – 23 أبريل","بدون توقف الدراسة","e"],["🎓","امتحانات الخريجين النهائية 毕业生期末考试","26 – 30 أبريل","5 أيام","e"]],rows:[["الخامس",[0,0,0,1,2,[3,"إجازة","h"],[4,"إجازة","h"]]],["السادس",[[5,"عيد تشينغمينغ","h"],6,7,8,9,10,11]],["السابع",[12,13,14,15,16,17,18]],["الثامن",[[19,"امتحان نصفي","e"],[20,"امتحان نصفي","e"],[21,"امتحان نصفي","e"],[22,"امتحان نصفي","e"],[23,"امتحان نصفي","e"],24,25]],["التاسع",[[26,"امتحان الخريجين","e"],[27,"امتحان الخريجين","e"],[28,"امتحان الخريجين","e"],[29,"امتحان الخريجين","e"],[30,"امتحان الخريجين","e"],0,0]]]},
@@ -387,6 +394,20 @@ const D={
  ]
 }};
 
+function goTo(y,m,d){
+ const sem=document.querySelector('.sem.on');
+ const card=sem.querySelector(`.mc[data-y="${y}"][data-m="${m}"]`);
+ if(!card)return;
+ card.classList.add('show');
+ const top=card.getBoundingClientRect().top+window.scrollY-90;
+ window.scrollTo({top,behavior:'smooth'});
+ setTimeout(()=>{
+  card.classList.remove('flash');void card.offsetWidth;card.classList.add('flash');
+  const cell=card.querySelector(`td[data-d="${y}-${m}-${d}"]`);
+  if(cell){cell.classList.remove('flash');void cell.offsetWidth;cell.classList.add('flash');
+   const tw=card.querySelector('.tw');if(tw&&tw.scrollWidth>tw.clientWidth){tw.scrollTo({left:cell.offsetLeft-tw.clientWidth/2+cell.offsetWidth/2,behavior:'smooth'})}}
+ },450);
+}
 function openIcs(){const s=document.getElementById('icsSec');s.classList.add('open');document.getElementById('icsCard').classList.add('show');document.getElementById('fab').classList.remove('on');setTimeout(()=>s.scrollIntoView({behavior:'smooth',block:'start'}),60)}
 function closeIcs(){document.getElementById('icsSec').classList.remove('open');fabCheck()}
 function fabCheck(){const s=document.getElementById('icsSec'),f=document.getElementById('fab');if(!s||!f)return;const past=window.scrollY>window.innerHeight*.75;f.classList.toggle('on',past&&!s.classList.contains('open'))}
@@ -425,14 +446,14 @@ const same=(a,y,m,d)=>a.getFullYear()===y&&a.getMonth()===m&&a.getDate()===d;
 
 function render(s){
  const S=D[s],el=document.getElementById('s'+s);
- let tl=`<div class="tl-wrap"><div class="tl-title">الخط الزمني للفصل</div><div class="tl"><div class="tl-line"></div><div class="tl-items">`;
- (S.tl.concat(S.itl||[])).sort((a,b)=>new Date(a[3],a[4],a[5])-new Date(b[3],b[4],b[5])).forEach(([l,d,t])=>tl+=`<div class="tl-item ${t}"><div class="tl-dot"></div><div class="tl-lbl">${l}</div><div class="tl-date">${d}</div></div>`);
+ let tl=`<div class="tl-wrap"><div class="tl-title">الخط الزمني للفصل</div><div class="tl-hint">اضغط على أي حدث للانتقال إليه في التقويم</div><div class="tl"><div class="tl-line"></div><div class="tl-items">`;
+ (S.tl.concat(S.itl||[])).sort((a,b)=>new Date(a[3],a[4],a[5])-new Date(b[3],b[4],b[5])).forEach(([l,d,t,y,m,dd])=>tl+=`<div class="tl-item ${t}" onclick="goTo(${y},${m},${dd})" title="اضغط للانتقال إلى ${l}"><div class="tl-dot"></div><div class="tl-lbl">${l}</div><div class="tl-date">${d}</div></div>`);
  tl+=`</div></div></div>`;
  let lg=`<div class="legend"><span class="lg"><i style="background:var(--red)"></i>عطلة رسمية</span><span class="lg"><i style="background:var(--gold)"></i>امتحانات</span><span class="lg"><i style="background:var(--jade)"></i>تسجيل</span><span class="lg"><i style="background:var(--ink3)"></i>نشاط</span><span class="lg"><i style="background:rgba(0,0,0,.12)"></i>إشعار</span><span class="lg isl"><i style="background:#2e7d5b"></i>مناسبة إسلامية/سعودية</span></div>`;
  let mo=`<div class="months">`;
  S.months.forEach(M=>{
   const isCur=TODAY.getFullYear()===M.y&&TODAY.getMonth()===M.m;
-  mo+=`<div class="mc${isCur?' cur':''}"><div class="mh"><span class="mn">${M.ar}</span><span class="mcn">${M.cn}</span><span class="md">${M.ar} ${M.y}</span><span class="mh-hj">· <bdi dir="ltr">${hjm(M.y,M.m)}</bdi> هـ</span><span class="mw">${M.w}</span></div>`;
+  mo+=`<div class="mc${isCur?' cur':''}" data-y="${M.y}" data-m="${M.m}"><div class="mh"><span class="mn">${M.ar}</span><span class="mcn">${M.cn}</span><span class="md">${M.ar} ${M.y}</span><span class="mh-hj">· <bdi dir="ltr">${hjm(M.y,M.m)}</bdi> هـ</span><span class="mw">${M.w}</span></div>`;
   const ib=islBanners[M.ar+M.y]||[];
   if(M.b.length||ib.length){mo+=`<div class="bn">`;
    M.b.forEach(([i,n,d,u,t])=>mo+=`<div class="b ${t}"><span class="bi">${i}</span><span class="bnm">${n}</span><span class="bd">${d}</span><span class="bdu">${u}</span></div>`);
@@ -449,7 +470,7 @@ function render(s){
     else if(w==="—"&&M.ar==="مارس"){my=1}
     const tod=same(TODAY,yy,my,n);
     const ik=yy+'-'+my+'-'+n, iv=ISL[ik];
-    mo+=`<td${tod?' class="today"':''}><span class="dn">${n}</span><span class="hj"><bdi dir="ltr">${hj(yy,my,n)}</bdi></span>${ev?`<span class="ev ${t}">${ev}</span>`:''}${iv?`<span class="ev i isl">${iv[1]} ${iv[0]}</span>`:''}</td>`;
+    mo+=`<td data-d="${yy}-${my}-${n}"${tod?' class="today"':''}><span class="dn">${n}</span><span class="hj"><bdi dir="ltr">${hj(yy,my,n)}</bdi></span>${ev?`<span class="ev ${t}">${ev}</span>`:''}${iv?`<span class="ev i isl">${iv[1]} ${iv[0]}</span>`:''}</td>`;
    });
    mo+=`</tr>`;
   });

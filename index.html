@@ -73,12 +73,12 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.04;b
 .ct-btn{padding:6px 16px;font-family:'Noto Naskh Arabic',serif;font-size:12px;border:1px solid var(--paper2);background:var(--paper3);color:var(--ink4);border-radius:20px;cursor:pointer;transition:all .3s}
 .ct-btn.on{background:var(--jade);color:#fff;border-color:var(--jade)}
 .ct-btn:hover:not(.on){border-color:var(--jade2);color:var(--jade)}
-.hj{display:none;direction:ltr;font-size:9px;color:var(--jade);margin-top:1px;line-height:1.3;font-family:'Noto Naskh Arabic',serif}
+.hj{display:none;font-size:9px;unicode-bidi:isolate;color:var(--jade);margin-top:1px;line-height:1.3;font-family:'Noto Naskh Arabic',serif}
 body.hijri .hj{display:block}
 body.hijri td{padding-top:8px;padding-bottom:8px}
-.stat-hj{direction:ltr;font-size:11px;color:var(--jade);margin-top:3px;display:none}
+.stat-hj{font-size:11px;color:var(--jade);margin-top:3px;display:none}
 body.hijri .stat-hj{display:block}
-.mh-hj{direction:ltr;font-size:11px;color:var(--jade);display:none;opacity:.85}
+.mh-hj{font-size:11px;color:var(--jade);display:none;opacity:.85}
 body.hijri .mh-hj{display:inline}
 
 /* ═══ TABS ═══ */
@@ -389,7 +389,7 @@ const HJ=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura-nu-latn',{day:'numeri
 const HJF=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura-nu-latn',{day:'numeric',month:'numeric',year:'numeric'});
 const HJM=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura-nu-latn',{month:'numeric',year:'numeric'});
 const hj=(y,m,d)=>{try{const p=HJ.formatToParts(new Date(y,m,d));const mo=p.find(x=>x.type==='month').value,da=p.find(x=>x.type==='day').value;return mo+'/'+da}catch(e){return ''}};
-const hjf=(dt)=>{try{const p=HJF.formatToParts(dt);const g=t=>p.find(x=>x.type===t).value;return g('year')+'/'+g('month')+'/'+g('day')+' هـ'}catch(e){return ''}};
+const hjf=(dt)=>{try{const p=HJF.formatToParts(dt);const g=t=>p.find(x=>x.type===t).value;return '<bdi dir="ltr">'+g('year')+'/'+g('month')+'/'+g('day')+'</bdi> هـ'}catch(e){return ''}};
 const hjm=(y,m)=>{try{const a=HJM.formatToParts(new Date(y,m,1)),b=HJM.formatToParts(new Date(y,m+1,0));const g=(p,t)=>p.find(x=>x.type===t).value;const ay=g(a,'year'),am=g(a,'month'),by=g(b,'year'),bm=g(b,'month');return (ay===by&&am===bm)?ay+'/'+am:ay+'/'+am+' – '+by+'/'+bm}catch(e){return ''}};
 function setCal(h,btn){document.body.classList.toggle('hijri',!!h);document.querySelectorAll('.ct-btn').forEach(b=>b.classList.remove('on'));btn.classList.add('on');localStorage.setItem('cal',h)}
 const DAYS=["الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت","الأحد"];
@@ -405,7 +405,7 @@ function render(s){
  let mo=`<div class="months">`;
  S.months.forEach(M=>{
   const isCur=TODAY.getFullYear()===M.y&&TODAY.getMonth()===M.m;
-  mo+=`<div class="mc${isCur?' cur':''}"><div class="mh"><span class="mn">${M.ar}</span><span class="mcn">${M.cn}</span><span class="md">${M.ar} ${M.y}</span><span class="mh-hj">· ${hjm(M.y,M.m)} هـ</span><span class="mw">${M.w}</span></div>`;
+  mo+=`<div class="mc${isCur?' cur':''}"><div class="mh"><span class="mn">${M.ar}</span><span class="mcn">${M.cn}</span><span class="md">${M.ar} ${M.y}</span><span class="mh-hj">· <bdi dir="ltr">${hjm(M.y,M.m)}</bdi> هـ</span><span class="mw">${M.w}</span></div>`;
   const ib=islBanners[M.ar+M.y]||[];
   if(M.b.length||ib.length){mo+=`<div class="bn">`;
    M.b.forEach(([i,n,d,u,t])=>mo+=`<div class="b ${t}"><span class="bi">${i}</span><span class="bnm">${n}</span><span class="bd">${d}</span><span class="bdu">${u}</span></div>`);
@@ -422,7 +422,7 @@ function render(s){
     else if(w==="—"&&M.ar==="مارس"){my=1}
     const tod=same(TODAY,yy,my,n);
     const ik=yy+'-'+my+'-'+n, iv=ISL[ik];
-    mo+=`<td${tod?' class="today"':''}><span class="dn">${n}</span><span class="hj">${hj(yy,my,n)}</span>${ev?`<span class="ev ${t}">${ev}</span>`:''}${iv?`<span class="ev i isl">${iv[1]} ${iv[0]}</span>`:''}</td>`;
+    mo+=`<td${tod?' class="today"':''}><span class="dn">${n}</span><span class="hj"><bdi dir="ltr">${hj(yy,my,n)}</bdi></span>${ev?`<span class="ev ${t}">${ev}</span>`:''}${iv?`<span class="ev i isl">${iv[1]} ${iv[0]}</span>`:''}</td>`;
    });
    mo+=`</tr>`;
   });

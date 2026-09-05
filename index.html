@@ -161,6 +161,28 @@ body.islamic .isl{display:inline-block}
 .tl-item.i{display:none}body.islamic .tl-item.i{display:block}
 .tl-item.i:nth-child(even){display:none}body.islamic .tl-item.i:nth-child(even){display:flex}
 
+
+/* ═══ ICS SECTION ═══ */
+.ics{max-width:1100px;margin:20px auto 0;padding:0 20px;position:relative;z-index:1}
+.ics-card{background:linear-gradient(135deg,var(--paper3),rgba(74,124,111,.04));border-radius:12px;padding:28px 30px;box-shadow:0 4px 20px var(--sh);position:relative;overflow:hidden;opacity:0;transform:translateY(30px);transition:all .7s ease}
+.ics-card.show{opacity:1;transform:none}
+.ics-card::before{content:'';position:absolute;top:0;right:0;width:5px;height:100%;background:linear-gradient(var(--jade),var(--gold))}
+.ics-h{font-family:'Reem Kufi',serif;font-size:22px;color:var(--ink);font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ics-sub{font-size:14px;color:var(--ink3);line-height:1.9;margin-bottom:20px}
+.dl{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--jade),#5a8f80);color:#fff;padding:14px 30px;border-radius:30px;text-decoration:none;font-family:'Reem Kufi',serif;font-size:16px;font-weight:600;box-shadow:0 4px 16px rgba(74,124,111,.3);transition:all .3s;margin-bottom:8px}
+.dl:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(74,124,111,.4)}
+.dl-note{font-size:12px;color:var(--ink4);margin-bottom:22px}
+.plat{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin-top:8px}
+.pf{background:var(--paper3);border-radius:10px;padding:20px 22px;border:1px solid rgba(0,0,0,.05)}
+.pf-h{font-family:'Reem Kufi',serif;font-size:16px;font-weight:700;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.pf-h i{font-style:normal;font-size:20px}
+.pf ol{margin:0;padding-right:20px;font-size:13.5px;line-height:2;color:var(--ink3)}
+.pf ol li{margin-bottom:4px}
+.pf ol li b{color:var(--ink2)}
+.pf-tip{margin-top:12px;padding:10px 12px;background:rgba(184,148,62,.08);border-right:3px solid var(--gold);border-radius:6px;font-size:12px;color:var(--ink3);line-height:1.8}
+.ics-warn{margin-top:18px;padding:12px 16px;background:rgba(194,58,43,.05);border-right:3px solid var(--red);border-radius:8px;font-size:12.5px;color:var(--ink3);line-height:1.9}
+@media(max-width:768px){.ics-card{padding:20px 18px}.plat{grid-template-columns:1fr}}
+
 /* ═══ NOTES ═══ */
 .notes{background:var(--paper3);border-radius:10px;padding:26px 30px;box-shadow:0 2px 16px var(--sh);position:relative;opacity:0;transform:translateY(30px);transition:all .7s ease}
 .notes.show{opacity:1;transform:none}
@@ -209,6 +231,52 @@ body.islamic .isl{display:inline-block}
 
 <div id="s1" class="sem on"></div>
 <div id="s2" class="sem"></div>
+
+
+<div class="ics"><div class="ics-card">
+  <div class="ics-h">📅 أضف التقويم إلى جوالك</div>
+  <div class="ics-sub">حمّل ملف <b>ICS</b> ليظهر التقويم الدراسي كاملاً في تطبيق التقويم لديك، مع تنبيه تلقائي قبل كل حدث بيوم واحد. يشمل الملف <b>31 حدثاً</b>: الفصلين الدراسيين، العطل الصينية، الامتحانات، أسابيع الممارسة، والمناسبات الإسلامية والسعودية.</div>
+  <a class="dl" href="bisu-calendar.ics" download>⬇ تحميل ملف التقويم (ICS)</a>
+  <div class="dl-note">الحجم ~15 كيلوبايت · يعمل مع Google Calendar و Apple Calendar و Outlook و Samsung Calendar</div>
+
+  <div class="plat">
+    <div class="pf">
+      <div class="pf-h"><i>🤖</i> أندرويد</div>
+      <ol>
+        <li>اضغط زر <b>التحميل</b> أعلاه — سيُحفظ الملف في مجلد <b>التنزيلات</b>.</li>
+        <li>افتح تطبيق <b>الملفات</b> (My Files) → <b>التنزيلات</b>.</li>
+        <li>اضغط على <b>bisu-calendar.ics</b>.</li>
+        <li>اختر فتحه بواسطة <b>تقويم Google</b> أو <b>Samsung Calendar</b>.</li>
+        <li>اختر الحساب الذي تريد الإضافة إليه ثم اضغط <b>استيراد / حفظ</b>.</li>
+      </ol>
+      <div class="pf-tip">💡 إن لم يفتح مباشرة: افتح <b>calendar.google.com</b> من متصفح الجوال (وضع سطح المكتب) → ⚙️ الإعدادات → <b>استيراد وتصدير</b> → اختر الملف → استيراد.</div>
+    </div>
+
+    <div class="pf">
+      <div class="pf-h"><i>🍎</i> آيفون / آيباد</div>
+      <ol>
+        <li>اضغط زر <b>التحميل</b> أعلاه من متصفح <b>Safari</b>.</li>
+        <li>ستظهر رسالة «هذا الموقع يحاول تنزيل ملف» → اضغط <b>تنزيل</b>.</li>
+        <li>اضغط أيقونة <b>التنزيلات</b> (⬇ بجانب شريط العنوان) ثم اضغط الملف.</li>
+        <li>أو افتح تطبيق <b>الملفات</b> → <b>التنزيلات</b> → اضغط <b>bisu-calendar.ics</b>.</li>
+        <li>اضغط <b>إضافة الكل</b> ثم اختر التقويم المناسب واضغط <b>تم</b>.</li>
+      </ol>
+      <div class="pf-tip">💡 يُفضّل إنشاء تقويم منفصل: <b>الإعدادات</b> → التقويم → الحسابات → أضف تقويماً جديداً باسم «الجامعة»، لتتمكن من إخفائه أو حذفه لاحقاً بضغطة واحدة.</div>
+    </div>
+
+    <div class="pf">
+      <div class="pf-h"><i>💻</i> الكمبيوتر</div>
+      <ol>
+        <li><b>Google Calendar</b>: الإعدادات ⚙️ → استيراد وتصدير → اختر الملف → استيراد.</li>
+        <li><b>Apple Calendar</b>: ملف → استيراد → اختر الملف.</li>
+        <li><b>Outlook</b>: ملف → فتح وتصدير → استيراد/تصدير → استيراد ملف iCalendar.</li>
+      </ol>
+      <div class="pf-tip">💡 بعد الاستيراد على الكمبيوتر بحسابك نفسه، ستتزامن الأحداث تلقائياً مع جوالك.</div>
+    </div>
+  </div>
+
+  <div class="ics-warn">⚠️ <b>ملاحظات مهمة:</b> جميع الأحداث مضبوطة كـ«أحداث يوم كامل» بتوقيت بكين (Asia/Shanghai). المناسبات الإسلامية محسوبة وفق تقويم <b>أم القرى</b> وقد تختلف بيوم حسب الرؤية الشرعية. المناسبات الإسلامية والسعودية <b>ليست إجازات جامعية في الصين</b> — الدراسة مستمرة فيها.</div>
+</div></div>
 
 <div class="footer">جامعة بكين للغات الأجنبية الثانية<div class="footer-cn">北京第二外国语学院</div></div>
 
@@ -335,8 +403,9 @@ function sw(s,btn){
 }
 
 function obs(){
+ document.querySelectorAll('.ics-card').forEach(e=>e.classList.add('pending'));
  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}}),{threshold:.1});
- document.querySelectorAll('.mc,.notes').forEach(el=>io.observe(el));
+ document.querySelectorAll('.mc,.notes,.ics-card').forEach(el=>io.observe(el));
  document.querySelectorAll('.tl-item').forEach((el,i)=>setTimeout(()=>el.classList.add('show'),i*80));
 }
 

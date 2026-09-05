@@ -180,6 +180,14 @@ body.islamic .isl{display:inline-block}
 .pf ol li{margin-bottom:4px}
 .pf ol li b{color:var(--ink2)}
 .pf-tip{margin-top:12px;padding:10px 12px;background:rgba(184,148,62,.08);border-right:3px solid var(--gold);border-radius:6px;font-size:12px;color:var(--ink3);line-height:1.8}
+.pf-img{margin-top:14px;text-align:center}
+.pf-img img{max-width:100%;width:230px;border-radius:12px;box-shadow:0 4px 16px var(--sh);border:1px solid rgba(0,0,0,.08);cursor:zoom-in;transition:transform .3s}
+.pf-img img:hover{transform:scale(1.03)}
+.pf-img figcaption{font-size:11px;color:var(--ink4);margin-top:8px;line-height:1.7}
+.lb{position:fixed;inset:0;background:rgba(26,26,26,.92);z-index:999;display:none;align-items:center;justify-content:center;padding:20px;cursor:zoom-out;backdrop-filter:blur(6px)}
+.lb.on{display:flex;animation:lbi .25s ease}
+@keyframes lbi{from{opacity:0}to{opacity:1}}
+.lb img{max-width:100%;max-height:92vh;border-radius:14px;box-shadow:0 10px 50px rgba(0,0,0,.5)}
 .ics-warn{margin-top:18px;padding:12px 16px;background:rgba(194,58,43,.05);border-right:3px solid var(--red);border-radius:8px;font-size:12.5px;color:var(--ink3);line-height:1.9}
 @media(max-width:768px){.ics-card{padding:20px 18px}.plat{grid-template-columns:1fr}}
 
@@ -256,12 +264,17 @@ body.islamic .isl{display:inline-block}
       <div class="pf-h"><i>🍎</i> آيفون / آيباد</div>
       <ol>
         <li>اضغط زر <b>التحميل</b> أعلاه من متصفح <b>Safari</b>.</li>
-        <li>ستظهر رسالة «هذا الموقع يحاول تنزيل ملف» → اضغط <b>تنزيل</b>.</li>
-        <li>اضغط أيقونة <b>التنزيلات</b> (⬇ بجانب شريط العنوان) ثم اضغط الملف.</li>
-        <li>أو افتح تطبيق <b>الملفات</b> → <b>التنزيلات</b> → اضغط <b>bisu-calendar.ics</b>.</li>
-        <li>اضغط <b>إضافة الكل</b> ثم اختر التقويم المناسب واضغط <b>تم</b>.</li>
+        <li>عند ظهور رسالة «هذا الموقع يحاول تنزيل ملف» اضغط <b>تنزيل</b>.</li>
+        <li>اضغط أيقونة التنزيلات <b>⬇</b> بجانب شريط العنوان، ثم اضغط على الملف.</li>
+        <li>ستُفتح شاشة التقويم وتعرض <b>«31 حدثًا»</b> — راجع القائمة.</li>
+        <li>اضغط <b>«إضافة الكل»</b> (الزر الأزرق في الأعلى يميناً).</li>
+        <li>اختر التقويم الذي تريد الحفظ فيه، ثم اضغط <b>✓</b> في الأعلى يساراً لإنهاء الاستيراد.</li>
       </ol>
-      <div class="pf-tip">💡 يُفضّل إنشاء تقويم منفصل: <b>الإعدادات</b> → التقويم → الحسابات → أضف تقويماً جديداً باسم «الجامعة»، لتتمكن من إخفائه أو حذفه لاحقاً بضغطة واحدة.</div>
+      <div class="pf-img">
+        <img src="ios-guide.jpg" alt="شاشة استيراد التقويم في الآيفون" onclick="zoom(this.src)" loading="lazy">
+        <figcaption>الرقم <b>1</b>: زر «إضافة الكل» &nbsp;·&nbsp; الرقم <b>2</b>: زر التأكيد ✓<br>اضغط على الصورة للتكبير</figcaption>
+      </div>
+      <div class="pf-tip">💡 يُفضّل إنشاء تقويم منفصل قبل الاستيراد: <b>الإعدادات</b> ← التقويم ← الحسابات ← أضف تقويماً جديداً باسم «الجامعة»، لتتمكن من إخفائه أو حذف كل أحداثه لاحقاً بضغطة واحدة.</div>
     </div>
 
     <div class="pf">
@@ -277,6 +290,8 @@ body.islamic .isl{display:inline-block}
 
   <div class="ics-warn">⚠️ <b>ملاحظات مهمة:</b> جميع الأحداث مضبوطة كـ«أحداث يوم كامل» بتوقيت بكين (Asia/Shanghai). المناسبات الإسلامية محسوبة وفق تقويم <b>أم القرى</b> وقد تختلف بيوم حسب الرؤية الشرعية. المناسبات الإسلامية والسعودية <b>ليست إجازات جامعية في الصين</b> — الدراسة مستمرة فيها.</div>
 </div></div>
+
+<div class="lb" id="lb" onclick="this.classList.remove('on')"><img id="lbi" alt=""></div>
 
 <div class="footer">جامعة بكين للغات الأجنبية الثانية<div class="footer-cn">北京第二外国语学院</div></div>
 
@@ -313,6 +328,8 @@ const D={
  ]
 }};
 
+function zoom(s){document.getElementById("lbi").src=s;document.getElementById("lb").classList.add("on")}
+document.addEventListener("keydown",e=>{if(e.key==="Escape")document.getElementById("lb").classList.remove("on")});
 let cur=1;
 // المناسبات الإسلامية والسعودية (ليست إجازات جامعية — للعلم فقط)
 const ISL={
